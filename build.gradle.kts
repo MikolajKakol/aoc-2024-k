@@ -3,9 +3,18 @@ plugins {
 }
 
 sourceSets {
-    main {
+    test {
         kotlin.srcDir("src")
     }
+}
+
+tasks.test {
+    useJUnitPlatform()
+}
+
+dependencies {
+    testImplementation(kotlin("test"))
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0")
 }
 
 tasks {
