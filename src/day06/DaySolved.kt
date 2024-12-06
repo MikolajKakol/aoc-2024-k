@@ -28,7 +28,7 @@ object DaySolved : Day {
 
         fun solve1(): Any {
             val visitedPositions = mutableSetOf(guardInitialPosition)
-            while (march2(maze, guardInitialPosition, Direction.NORTH, visitedPositions)) {
+            while (march(maze, guardInitialPosition, Direction.NORTH, visitedPositions)) {
             }
 
             return visitedPositions.size
@@ -36,7 +36,7 @@ object DaySolved : Day {
 
         fun solve2(): Any {
             val visitedPositions = mutableSetOf(guardInitialPosition)
-            while (march2(maze, guardInitialPosition, Direction.NORTH, visitedPositions)) {
+            while (march(maze, guardInitialPosition, Direction.NORTH, visitedPositions)) {
             }
 
             val possibleNewObstacles = visitedPositions.toList()
@@ -50,10 +50,10 @@ object DaySolved : Day {
                             if (getOrNull(it) != null) set(it, '#')
                         }
                 }
-                .count { march2(it, guardInitialPosition, Direction.NORTH, mutableSetOf()) }
+                .count { march(it, guardInitialPosition, Direction.NORTH, mutableSetOf()) }
         }
 
-        private tailrec fun march2(
+        private tailrec fun march(
             matrix2D: Matrix2D,
             guardPosition: Point2D,
             direction: Direction,
@@ -67,14 +67,14 @@ object DaySolved : Day {
             return when (mapTile) {
                 '.' -> {
                     visitedPositions.add(nextPosition)
-                    march2(matrix2D, nextPosition, direction, visitedPositions, turningPoints)
+                    march(matrix2D, nextPosition, direction, visitedPositions, turningPoints)
                 }
 
                 '#' -> {
                     if (turningPoints.contains(guardPosition to direction))
                         return true
                     turningPoints.add(guardPosition to direction)
-                    march2(matrix2D, guardPosition, direction.nextClockWise, visitedPositions, turningPoints)
+                    march(matrix2D, guardPosition, direction.nextClockWise, visitedPositions, turningPoints)
                 }
 
                 else -> throw IllegalArgumentException()
