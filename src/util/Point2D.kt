@@ -61,4 +61,12 @@ enum class Direction {
             EAST -> WEST
             WEST -> EAST
         }
+
+    val nextClockWise: Direction
+        get() = when (this) {
+            NORTH -> EAST
+            EAST -> SOUTH
+            SOUTH -> WEST
+            WEST -> NORTH
+        }
 }

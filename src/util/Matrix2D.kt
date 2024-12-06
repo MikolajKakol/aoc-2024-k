@@ -1,8 +1,12 @@
 package util
 
-class Matrix2D(
+data class Matrix2D(
     val array: Array<CharArray> = emptyArray(),
 ) {
+
+    fun clone(): Matrix2D {
+        return Matrix2D(array.map { it.clone() }.toTypedArray())
+    }
 
     val width: Int
         get() = array[0].size
@@ -110,6 +114,19 @@ class Matrix2D(
         array.forEach { row ->
             String(row).println()
         }
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Matrix2D
+
+        return array.contentDeepEquals(other.array)
+    }
+
+    override fun hashCode(): Int {
+        return array.contentDeepHashCode()
     }
 
     companion object {
